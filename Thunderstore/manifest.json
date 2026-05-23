@@ -1,0 +1,10 @@
+{
+  "namespace": "",
+  "name": "",
+  "description": "",
+  "version_number": "1.0.0",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305",
+    "koki-Custom_Levels_Reborn-1.0.0"
+  ]
+}
