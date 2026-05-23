@@ -1,7 +1,7 @@
 # Custom Map Kit
 
 > [!NOTE]
-> Your maps will need Custom Levels Reloaded {INSERT URL HERE} (CLR) to work!
+> Your maps will need Custom Levels Reborn {INSERT URL HERE} (CLR) to work!
 
 ### General Process
 
