@@ -35,6 +35,8 @@ Assets in the "shared" folder should be marked with the "shared" bundle, and wil
 
 The shared bundle should (mostly) represent vanilla assets, so that map makers do not have to not re-export vanilla assets constantly. If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki` on Discord. You can also contact me for custom map behavior or weapons :)
 
+When testing changes to your map, you don't have to restart your game unless you change the name of the scene or name/path of the bundle.
+
 ---
 
 [Technical details can be found at the wiki.](https://github.com/Kokiix/CustomMapKit/wiki/Technical-Details)
