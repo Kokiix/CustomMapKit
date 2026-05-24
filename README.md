@@ -21,6 +21,9 @@ STRAFTAT (or at least this kit) was made in [Unity 2021.3.45f2](https://unity.co
 
 If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`, set your BepInEx plugin folder and project name in that file. Build bundles with the `Assets/Build Asset Bundles` menu in the top menu bar.
 
+> [!WARNING]
+> Linux users new to Unity, watch out for [issues potentially caused by bee_backend. Solutions are included in the linked discussion.](https://discussions.unity.com/t/linux-editor-stuck-on-loading-because-of-bee-backend-w-workaround/854480)
+
 ### General
 
 The name of your .unity file determines the name of your map in game. Your assetbundle name must match the name of your map (case insensitive). Create a thumbnail by assigning a certain bundle name to some Texture2D. This name should be the name of your main bundle, plus `_resources`. See the test map for examples.
