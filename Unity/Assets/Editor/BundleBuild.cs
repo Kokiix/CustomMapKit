@@ -22,7 +22,7 @@ public static class BundleBuilder
     private static readonly Dictionary<string, string> bundleToOutputDir = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
         // These output dirs are appended to your plugin directory set above
-        { "testmap", @"DEVELOPMENT-BUILD-testmap\Custom Maps" }
+        { "testmap", @"DEVELOPMENT-BUILD-testmap\CustomMaps" }
     };
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -70,9 +70,9 @@ public static class BundleBuilder
         {
             throw new Exception($"No output dir has been set for bundle {bundleName}!");
         }
-        else if (!projectDir.Contains("Custom Maps") && bundleName != "shared")
+        else if (!projectDir.Contains("CustomMaps") && bundleName != "shared")
         {
-            throw new Exception("Your mod folder must have a folder named 'Custom Maps' to be seen by Custom Levels Reborn!");
+            throw new Exception("Your mod folder must have a folder named 'CustomMaps' to be seen by Custom Levels Reborn!");
         }
 
         return Path.Combine(pluginDir, projectDir);
