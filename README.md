@@ -1,5 +1,8 @@
 # Custom Map Kit
 
+> [!CAUTION]
+> This project is in early access and changing constantly. Expect things to break, and contact @zkoki on discord when they do.
+
 > [!NOTE]
 > Your maps will need Custom Levels Reborn {INSERT URL HERE} (CLR) to work!
 
