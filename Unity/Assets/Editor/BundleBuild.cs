@@ -14,7 +14,6 @@ public static class BundleBuilder
     // CHANGE THIS STUFF ---------------------------------------------------------------------------------------------------------------------------
 
     // Set once
-    private static readonly BuildTarget platform = BuildTarget.StandaloneWindows64; // BuildTarget.StandaloneLinux64 for linux
     private static readonly string pluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
 
     // Update whenever you make new bundles
@@ -31,7 +30,7 @@ public static class BundleBuilder
     {
         if (!Directory.Exists(localDir)) Directory.CreateDirectory(localDir);
 
-        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(localDir, BuildAssetBundleOptions.None, platform);
+        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(localDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
         if (manifest != null)
         {
             CopyChangedBundles(manifest);
