@@ -29,7 +29,9 @@ If you're using the bundle exporter that comes with the kit in `Assets/Editor/Bu
 
 ### General
 
-The name of your .unity file determines the name of your map in game. Your map bundle can be named whatever, and can hold multiple scenes. To create a thumbnail, create a new bundle (Unity requires scene bundles and general assetbundles to be separate) with a Texture2D that has the same name as your scene (you can have multiple thumbnails in this bundle). If you're using the default bundle build script, naming your thumbnail bundle `{SCENE_BUNDLE_NAME}_resources` will make your thumbnail bundle export alongside your scene bundle, without having to define it in the build script.
+The name of your .unity file determines the name of your map in game. Your map bundle can be named whatever, and can hold multiple scenes. 
+
+For materials and thumbnails to work, you must have a bundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap their shaders for in game ones. For custom shaders, see the wiki.
 
 Assets in the "shared" folder should be marked with the "shared" bundle, and will be ignored by the bundle exporter that comes with the kit. If you use your own bundle export method, make sure to ignore the bundle, or avoid copying it to your Thunderstore package. Every user that has CLR will have a bundle with the shared assets. 
 
