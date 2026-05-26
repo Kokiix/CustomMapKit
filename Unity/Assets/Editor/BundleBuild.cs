@@ -28,6 +28,7 @@ public static class BundleBuilder
     [MenuItem("Assets/Build AssetBundles")]
     public static void PerformBuild()
     {
+        FishNetMetadataSetup.SetupAllNetworkObjectsInProject();
         if (!Directory.Exists(localDir)) Directory.CreateDirectory(localDir);
 
         AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(localDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
