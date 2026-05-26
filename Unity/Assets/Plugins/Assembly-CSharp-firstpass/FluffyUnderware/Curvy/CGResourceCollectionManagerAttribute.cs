@@ -1,0 +1,15 @@
+using System;
+
+namespace FluffyUnderware.Curvy
+{
+	[AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+	public sealed class CGResourceCollectionManagerAttribute : CGResourceManagerAttribute
+	{
+		public bool ShowCount;
+
+		public CGResourceCollectionManagerAttribute(string resourceName)
+			: base(null)
+		{
+		}
+	}
+}
