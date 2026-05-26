@@ -783,7 +783,7 @@ namespace FluffyUnderware.Curvy
 		{
 		}
 
-		internal unsafe ref readonly ControlPointExtrinsicProperties GetExtrinsicPropertiesINTERNAL()
+		internal ref readonly ControlPointExtrinsicProperties GetExtrinsicPropertiesINTERNAL()
 		{
 			return ref *(ControlPointExtrinsicProperties*)null;
 		}
