@@ -1063,5 +1063,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: center
       objectReference: {fileID: 0}
+    - target: {fileID: 8656549424970502663, guid: 502d94957a6696d4ab00ae50311b6e0d, type: 3}
+      propertyPath: <SceneId>k__BackingField
+      value: 1548487152734757342
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656549424970502663, guid: 502d94957a6696d4ab00ae50311b6e0d, type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8656549424970502663, guid: 502d94957a6696d4ab00ae50311b6e0d, type: 3}
+      propertyPath: _networkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 8596807524200925955}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 502d94957a6696d4ab00ae50311b6e0d, type: 3}
+--- !u!1 &8596807524200925954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8596807524096443809, guid: 502d94957a6696d4ab00ae50311b6e0d, type: 3}
+  m_PrefabInstance: {fileID: 8596807524200925953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8596807524200925955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596807524200925954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfe6930f3b43a5cb95bda23c2309e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _networkObjectCache: {fileID: 8596807524200925956}
+  weaponRespawnTimeInSeconds: 0
+  itemToSpawn: {fileID: 0}
+--- !u!114 &8596807524200925956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8656549424970502663, guid: 502d94957a6696d4ab00ae50311b6e0d, type: 3}
+  m_PrefabInstance: {fileID: 8596807524200925953}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596807524200925954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1201363339, guid: 1f191796bb5acf747b48ef6cf55d4ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
