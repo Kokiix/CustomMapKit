@@ -24,22 +24,17 @@ STRAFTAT (or at least this kit) was made in [Unity 2021.3.45f2](https://unity.co
 
 If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`, set your BepInEx plugin folder and folder structure for your assetbundles in there. Build bundles with the `Assets/Build Asset Bundles` menu in the top menu bar. As long as bundles are within `CustomMaps`, folder structure doesn't matter.
 
-You may have some compile errors to begin with, because the kit includes DLL dependencies for all in game components/stubs; where those DLLs include some Unity packages. Read the error messages to remove duplicates.
-
-> [!WARNING]
-> Linux users new to Unity, watch out for [issues potentially caused by bee_backend. Solutions are included in the linked discussion.](https://discussions.unity.com/t/linux-editor-stuck-on-loading-because-of-bee-backend-w-workaround/854480)
+You may have some build errors to begin with, because the kit includes DLL dependencies for all in game components/stubs, where those DLLs include some Unity packages you may already have installed. Read the error messages to remove duplicates and resolve the build errors.
 
 ### General
+
+When testing changes to your map, you don't have to restart your game unless you change the name of the scene or name/path of the bundle.
 
 The name of your .unity file determines the name of your map in game. Your map bundle can be named whatever, and can hold multiple scenes. 
 
 For materials and thumbnails to work, you must have a bundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap their shaders for in game ones. For custom shaders, see the wiki.
 
-Assets in the "shared" folder should be marked with the "shared" bundle, and will be ignored by the bundle exporter that comes with the kit. If you use your own bundle export method, make sure to ignore the bundle, or avoid copying it to your Thunderstore package. Every user that has CLR will have a bundle with the shared assets. 
-
-The shared bundle should (mostly) represent vanilla assets, so that map makers do not have to not re-export vanilla assets constantly. If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki` on Discord. You can also contact me for custom map behavior or weapons :)
-
-When testing changes to your map, you don't have to restart your game unless you change the name of the scene or name/path of the bundle.
+All users with CLR have the `shared` bundle, for vanilla assets like item/player spawners, etc. If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki` on Discord through DM or [the modding channel of the STRAFTAT server](https://discord.com/channels/1124764095623741473/1364522283485626368). You can also contact me for custom map behavior or weapons :)
 
 ---
 
