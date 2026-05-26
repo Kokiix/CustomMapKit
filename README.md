@@ -4,7 +4,7 @@
 > This project is in early access and changing constantly. Expect things to break, and contact @zkoki on discord when they do.
 
 > [!NOTE]
-> Your maps will need Custom Levels Reborn {INSERT URL HERE} (CLR) to work!
+> Your maps will need [Custom Levels Reborn (CLR)](https://github.com/Kokiix/custom_levels_reborn) to work!
 
 ## General Process
 
@@ -23,6 +23,8 @@
 STRAFTAT (or at least this kit) was made in [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2). The kit may possibly work in other versions, but I haven't tested anything.
 
 If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`, set your BepInEx plugin folder and folder structure for your assetbundles in there. Build bundles with the `Assets/Build Asset Bundles` menu in the top menu bar. As long as bundles are within `CustomMaps`, folder structure doesn't matter.
+
+You may have some compile errors to begin with, because the kit includes DLL dependencies for all in game components/stubs; where those DLLs include some Unity packages. Read the error messages to remove duplicates.
 
 > [!WARNING]
 > Linux users new to Unity, watch out for [issues potentially caused by bee_backend. Solutions are included in the linked discussion.](https://discussions.unity.com/t/linux-editor-stuck-on-loading-because-of-bee-backend-w-workaround/854480)
