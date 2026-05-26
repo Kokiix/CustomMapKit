@@ -31,7 +31,7 @@ You may have some build errors to begin with, because the kit includes DLL depen
 
 When testing changes to your map, you don't have to restart your game unless you change the name of the scene or name/path of the bundle.
 
-The name of your .unity file determines the name of your map in game. Your map bundle can be named whatever, and can hold multiple scenes. 
+The name of your .unity file determines the name of your map in game. Your map bundle can be named whatever, and can hold multiple scenes. The version of your map is determined by the manifest.json of your Thunderstore upload.
 
 For materials and thumbnails to work, you must have a bundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap their shaders for in game ones. For custom shaders, see the wiki.
 
