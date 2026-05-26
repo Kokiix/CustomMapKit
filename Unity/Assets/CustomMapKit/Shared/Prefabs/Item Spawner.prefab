@@ -176,8 +176,8 @@ MonoBehaviour:
   <PrefabId>k__BackingField: 6
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 1687252477
-  <SceneId>k__BackingField: 1548487152734757342
-  <AssetPathHash>k__BackingField: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 5607625337668269451
 --- !u!114 &8596807524200925955
 MonoBehaviour:
   m_ObjectHideFlags: 0
