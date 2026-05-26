@@ -10,7 +10,27 @@ using FishNet.Object;
 public static class FishNetMetadataSetup
 {
     private const string CACHE_PATH = "Library/FishNetModdingCache.json";
-    private static Dictionary<string, string> _cache = new Dictionary<string, string>();
+    private static readonly Dictionary<string, Hash128> _cache = new Dictionary<string, Hash128>();
+
+    // Property name caching to avoid repeating linear string searches in FindProperty
+    private static readonly Dictionary<Type, Dictionary<string, string>> _propertyNameCache = new Dictionary<Type, Dictionary<string, string>>();
+
+    // Pre-allocated static arrays to avoid params allocations
+    private static readonly string[] AssetPathHashNames = { "<AssetPathHash>k__BackingField", "_assetPathHash", "AssetPathHash" };
+    private static readonly string[] SceneIdNames = { "<SceneId>k__BackingField", "_sceneId", "SceneId" };
+    private static readonly string[] IsNestedNames = { "<IsNested>k__BackingField", "_isNested", "IsNested" };
+    private static readonly string[] NetworkBehavioursNames = { "NetworkBehaviours", "_networkBehaviours" };
+    private static readonly string[] InitializedNestedNetworkObjectsNames = { "InitializedNestedNetworkObjects", "_initializedNestedNetworkObjects", "<InitializedNestedNetworkObjects>k__BackingField" };
+    private static readonly string[] ComponentIndexNames = { "_componentIndexCache", "ComponentIndex", "_componentIndex" };
+    private static readonly string[] NetworkObjectNames = { "_networkObjectCache", "NetworkObject", "_networkObject" };
+    private static readonly string[] AddedNetworkObjectNames = { "_addedNetworkObject" };
+
+    // Shared list caches to avoid GC allocation inside recursions and loops
+    private static readonly List<NetworkBehaviour> _nbListCache = new List<NetworkBehaviour>();
+    private static readonly List<NetworkObject> _nestedNobsCache = new List<NetworkObject>();
+    private static readonly List<NetworkObject> _sceneNobsCache = new List<NetworkObject>();
+    private static readonly List<NetworkBehaviour> _tempNbComponents = new List<NetworkBehaviour>();
+    private static readonly List<string> _pathPartsCache = new List<string>();
 
     // Serializable structures for native Unity JSON serialization
     [Serializable]
@@ -41,7 +61,7 @@ public static class FishNetMetadataSetup
                 {
                     foreach (var entry in data.Entries)
                     {
-                        _cache[entry.Path] = entry.Hash;
+                        _cache[entry.Path] = Hash128.Parse(entry.Hash);
                     }
                 }
             }
@@ -59,7 +79,7 @@ public static class FishNetMetadataSetup
             CacheData data = new CacheData();
             foreach (var kvp in _cache)
             {
-                data.Entries.Add(new CacheEntry { Path = kvp.Key, Hash = kvp.Value });
+                data.Entries.Add(new CacheEntry { Path = kvp.Key, Hash = kvp.Value.ToString() });
             }
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(CACHE_PATH, json);
@@ -70,13 +90,9 @@ public static class FishNetMetadataSetup
         }
     }
 
-    private static bool IsAssetUpToDate(string path, string currentHash)
+    private static bool IsAssetUpToDate(string path, Hash128 currentHash)
     {
-        if (_cache.TryGetValue(path, out string cachedHash))
-        {
-            return cachedHash == currentHash;
-        }
-        return false;
+        return _cache.TryGetValue(path, out Hash128 cachedHash) && cachedHash == currentHash;
     }
 
     #endregion
@@ -104,7 +120,7 @@ public static class FishNetMetadataSetup
         foreach (string guid in prefabGuids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
-            string currentHash = AssetDatabase.GetAssetDependencyHash(path).ToString(); //
+            Hash128 currentHash = AssetDatabase.GetAssetDependencyHash(path);
 
             // Skip loading the asset entirely if it hasn't changed
             if (IsAssetUpToDate(path, currentHash))
@@ -138,7 +154,7 @@ public static class FishNetMetadataSetup
         foreach (string guid in sceneGuids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
-            string currentHash = AssetDatabase.GetAssetDependencyHash(path).ToString(); //
+            Hash128 currentHash = AssetDatabase.GetAssetDependencyHash(path);
 
             // Skip opening the scene entirely if it hasn't changed
             if (IsAssetUpToDate(path, currentHash))
@@ -151,16 +167,16 @@ public static class FishNetMetadataSetup
             if (!scene.IsValid()) continue;
 
             GameObject[] rootObjects = scene.GetRootGameObjects();
-            List<NetworkObject> sceneNobs = new List<NetworkObject>();
+            _sceneNobsCache.Clear();
 
             foreach (GameObject root in rootObjects)
             {
-                sceneNobs.AddRange(root.GetComponentsInChildren<NetworkObject>(true));
+                _sceneNobsCache.AddRange(root.GetComponentsInChildren<NetworkObject>(true));
             }
 
-            if (sceneNobs.Count > 0)
+            if (_sceneNobsCache.Count > 0)
             {
-                foreach (NetworkObject nob in sceneNobs)
+                foreach (NetworkObject nob in _sceneNobsCache)
                 {
                     ProcessNetworkObject(nob);
                     sceneProcessedCount++;
@@ -203,71 +219,69 @@ public static class FishNetMetadataSetup
         if (isPrefab)
         {
             ulong pathHash = GetFNV1a64(assetPath);
-            SetSerializedField(serializedNob, pathHash, "<AssetPathHash>k__BackingField", "_assetPathHash", "AssetPathHash");
-            SetSerializedField(serializedNob, 0UL, "<SceneId>k__BackingField", "_sceneId", "SceneId");
+            SetSerializedField(serializedNob, pathHash, "AssetPathHash", AssetPathHashNames);
+            SetSerializedField(serializedNob, 0UL, "SceneId", SceneIdNames);
         }
         else if (isSceneObject)
         {
             string hierarchyPath = GetHierarchyPath(go);
             ulong sceneId = GetFNV1a64(go.scene.name + "/" + hierarchyPath);
-            SetSerializedField(serializedNob, sceneId, "<SceneId>k__BackingField", "_sceneId", "SceneId");
-            SetSerializedField(serializedNob, 0UL, "<AssetPathHash>k__BackingField", "_assetPathHash", "AssetPathHash");
+            SetSerializedField(serializedNob, sceneId, "SceneId", SceneIdNames);
+            SetSerializedField(serializedNob, 0UL, "AssetPathHash", AssetPathHashNames);
         }
 
         bool isNested = false;
         Transform current = go.transform.parent;
         while (current != null)
         {
-            if (current.GetComponent<NetworkObject>() != null)
+            if (current.TryGetComponent<NetworkObject>(out _))
             {
                 isNested = true;
                 break;
             }
             current = current.parent;
         }
-        SetSerializedField(serializedNob, isNested, "<IsNested>k__BackingField", "_isNested", "IsNested");
+        SetSerializedField(serializedNob, isNested, "IsNested", IsNestedNames);
 
-        List<NetworkBehaviour> nbList = new List<NetworkBehaviour>();
-        GetNetworkBehaviours(go.transform, nbList);
+        _nbListCache.Clear();
+        GetNetworkBehaviours(go.transform, _nbListCache);
 
-        SerializedProperty behavioursProp = serializedNob.FindProperty("NetworkBehaviours") ?? serializedNob.FindProperty("_networkBehaviours");
+        SerializedProperty behavioursProp = FindPropertyCached(serializedNob, "NetworkBehaviours", NetworkBehavioursNames);
         if (behavioursProp != null)
         {
             behavioursProp.ClearArray();
-            for (int i = 0; i < nbList.Count; i++)
+            for (int i = 0; i < _nbListCache.Count; i++)
             {
                 behavioursProp.InsertArrayElementAtIndex(i);
-                behavioursProp.GetArrayElementAtIndex(i).objectReferenceValue = nbList[i];
+                behavioursProp.GetArrayElementAtIndex(i).objectReferenceValue = _nbListCache[i];
             }
         }
 
-        List<NetworkObject> nestedNobs = new List<NetworkObject>();
-        GetNestedNetworkObjects(go.transform, nestedNobs);
-        SerializedProperty nestedProp = serializedNob.FindProperty("InitializedNestedNetworkObjects")
-                                     ?? serializedNob.FindProperty("_initializedNestedNetworkObjects")
-                                     ?? serializedNob.FindProperty("<InitializedNestedNetworkObjects>k__BackingField");
+        _nestedNobsCache.Clear();
+        GetNestedNetworkObjects(go.transform, _nestedNobsCache);
+        SerializedProperty nestedProp = FindPropertyCached(serializedNob, "InitializedNestedNetworkObjects", InitializedNestedNetworkObjectsNames);
         if (nestedProp != null)
         {
             nestedProp.ClearArray();
-            for (int i = 0; i < nestedNobs.Count; i++)
+            for (int i = 0; i < _nestedNobsCache.Count; i++)
             {
                 nestedProp.InsertArrayElementAtIndex(i);
-                nestedProp.GetArrayElementAtIndex(i).objectReferenceValue = nestedNobs[i];
+                nestedProp.GetArrayElementAtIndex(i).objectReferenceValue = _nestedNobsCache[i];
             }
         }
 
         serializedNob.ApplyModifiedProperties();
         EditorUtility.SetDirty(nob);
 
-        for (int i = 0; i < nbList.Count; i++)
+        for (int i = 0; i < _nbListCache.Count; i++)
         {
-            NetworkBehaviour nb = nbList[i];
+            NetworkBehaviour nb = _nbListCache[i];
             if (nb == null) continue;
 
             SerializedObject serializedNb = new SerializedObject(nb);
-            SetSerializedField(serializedNb, (byte)i, "_componentIndexCache", "ComponentIndex", "_componentIndex");
-            SetSerializedField(serializedNb, nob, "_networkObjectCache", "NetworkObject", "_networkObject");
-            SetSerializedField(serializedNb, nob, "_addedNetworkObject");
+            SetSerializedField(serializedNb, (byte)i, "ComponentIndex", ComponentIndexNames);
+            SetSerializedField(serializedNb, nob, "NetworkObject", NetworkObjectNames);
+            SetSerializedField(serializedNb, nob, "AddedNetworkObject", AddedNetworkObjectNames);
 
             serializedNb.ApplyModifiedProperties();
             EditorUtility.SetDirty(nb);
@@ -276,9 +290,11 @@ public static class FishNetMetadataSetup
 
     private static void GetNetworkBehaviours(Transform t, List<NetworkBehaviour> results)
     {
-        var behavioursOnTransform = t.GetComponents<NetworkBehaviour>();
-        foreach (var nb in behavioursOnTransform)
+        _tempNbComponents.Clear();
+        t.GetComponents(_tempNbComponents);
+        for (int i = 0; i < _tempNbComponents.Count; i++)
         {
+            NetworkBehaviour nb = _tempNbComponents[i];
             if (nb != null)
             {
                 results.Add(nb);
@@ -288,7 +304,7 @@ public static class FishNetMetadataSetup
         for (int i = 0; i < t.childCount; i++)
         {
             Transform child = t.GetChild(i);
-            if (child != null && child.GetComponent<NetworkObject>() == null)
+            if (child != null && !child.TryGetComponent<NetworkObject>(out _))
             {
                 GetNetworkBehaviours(child, results);
             }
@@ -302,82 +318,122 @@ public static class FishNetMetadataSetup
             Transform child = t.GetChild(i);
             if (child != null)
             {
-                NetworkObject childNob = child.GetComponent<NetworkObject>();
-                if (childNob != null)
+                if (child.TryGetComponent<NetworkObject>(out var childNob))
                 {
                     results.Add(childNob);
-                    GetNestedNetworkObjects(child, results);
                 }
-                else
-                {
-                    GetNestedNetworkObjects(child, results);
-                }
+                GetNestedNetworkObjects(child, results);
             }
         }
     }
 
-    private static bool SetSerializedField(SerializedObject serializedObject, object value, params string[] possibleNames)
+    private static bool SetSerializedField(SerializedObject serializedObject, object value, string logicalKey, string[] possibleNames)
     {
+        string propName = GetCachedPropertyName(serializedObject, logicalKey, possibleNames);
+        if (string.IsNullOrEmpty(propName)) return false;
+
+        SerializedProperty prop = serializedObject.FindProperty(propName);
+        if (prop != null)
+        {
+            if (value is ulong ulongVal)
+            {
+                prop.longValue = unchecked((long)ulongVal);
+            }
+            else if (value is long longVal)
+            {
+                prop.longValue = longVal;
+            }
+            else if (value is int intVal)
+            {
+                prop.intValue = intVal;
+            }
+            else if (value is byte byteVal)
+            {
+                prop.intValue = byteVal;
+            }
+            else if (value is bool boolVal)
+            {
+                prop.boolValue = boolVal;
+            }
+            else if (value is string stringVal)
+            {
+                prop.stringValue = stringVal;
+            }
+            else if (value == null || value is UnityEngine.Object)
+            {
+                prop.objectReferenceValue = (UnityEngine.Object)value;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private static string GetCachedPropertyName(SerializedObject serializedObject, string logicalKey, string[] possibleNames)
+    {
+        Type type = serializedObject.targetObject.GetType();
+        if (!_propertyNameCache.TryGetValue(type, out var typeCache))
+        {
+            typeCache = new Dictionary<string, string>();
+            _propertyNameCache[type] = typeCache;
+        }
+
+        if (typeCache.TryGetValue(logicalKey, out string cachedName))
+        {
+            return cachedName;
+        }
+
         foreach (var name in possibleNames)
         {
             SerializedProperty prop = serializedObject.FindProperty(name);
             if (prop != null)
             {
-                if (value is ulong ulongVal)
-                {
-                    prop.longValue = unchecked((long)ulongVal);
-                }
-                else if (value is long longVal)
-                {
-                    prop.longValue = longVal;
-                }
-                else if (value is int intVal)
-                {
-                    prop.intValue = intVal;
-                }
-                else if (value is byte byteVal)
-                {
-                    prop.intValue = byteVal;
-                }
-                else if (value is bool boolVal)
-                {
-                    prop.boolValue = boolVal;
-                }
-                else if (value is string stringVal)
-                {
-                    prop.stringValue = stringVal;
-                }
-                else if (value == null || value is UnityEngine.Object)
-                {
-                    prop.objectReferenceValue = (UnityEngine.Object)value;
-                }
-                return true;
+                typeCache[logicalKey] = name;
+                return name;
             }
         }
-        return false;
+
+        typeCache[logicalKey] = null;
+        return null;
+    }
+
+    private static SerializedProperty FindPropertyCached(SerializedObject serializedObject, string logicalKey, string[] possibleNames)
+    {
+        string propName = GetCachedPropertyName(serializedObject, logicalKey, possibleNames);
+        if (string.IsNullOrEmpty(propName)) return null;
+        return serializedObject.FindProperty(propName);
     }
 
     private static string GetHierarchyPath(GameObject go)
     {
-        string path = go.name;
-        Transform parent = go.transform.parent;
-        while (parent != null)
+        _pathPartsCache.Clear();
+        Transform current = go.transform;
+        while (current != null)
         {
-            path = parent.name + "/" + path;
-            parent = parent.parent;
+            _pathPartsCache.Add(current.name);
+            current = current.parent;
         }
-        return path;
+        _pathPartsCache.Reverse();
+        return string.Join("/", _pathPartsCache);
     }
 
     private static ulong GetFNV1a64(string str)
     {
         if (string.IsNullOrEmpty(str)) return 0;
-        string normalized = str.Replace('\\', '/').ToLowerInvariant();
 
         ulong hash = 14695981039346656037UL;
-        for (int i = 0; i < normalized.Length; i++)
+        for (int i = 0; i < str.Length; i++)
         {
-            hash ^= normalized[i];
+            char c = str[i];
+            if (c == '\\')
+            {
+                c = '/';
+            }
+            else
+            {
+                c = char.ToLowerInvariant(c);
+            }
+
+            hash ^= c;
             hash *= 1099511628211UL;
         }
         return hash;
