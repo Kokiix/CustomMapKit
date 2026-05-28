@@ -37,6 +37,10 @@ For materials and thumbnails to work, you must have a bundle that ends in `_reso
 
 All users with CLR have the `shared` bundle, for vanilla assets like item/player spawners, etc. If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki` on Discord through DM or [the modding channel of the STRAFTAT server](https://discord.com/channels/1124764095623741473/1364522283485626368). You can also contact me for custom map behavior or weapons :)
 
+### Extra Notes
+
+The TextMeshPro package is required to use the parkour prefabs in `shared`.
+
 ---
 
 [Technical details can be found at the wiki.](https://github.com/Kokiix/CustomMapKit/wiki/Technical-Details)
