@@ -1,46 +1,40 @@
 # Custom Map Kit
 
 > [!CAUTION]
-> This project is in early access and changing constantly. Expect things to break, and contact @zkoki on discord when they do.
+> This project is functional, but under development. Making a map will likely requiring contacting @zkoki on Discord (through DM or [STRAFTAT server modding channel](https://discord.gg/xjx7PNq5)) for features or help.
 
 > [!NOTE]
 > Your maps will need [Custom Levels Reborn (CLR)](https://github.com/Kokiix/custom_levels_reborn) to work!
-> Your bundles will automatically be loaded by CLR. Don't make a plugin unless you know what you're doing.
+> Your bundles will automatically be loaded by CLR. Don't create a bundle loader plugin unless you know what you're doing.
 
 ## General Process
 
 1. Put the contents of `Unity` into your unity project. 
 2. Work on your map.
 3. Build the assetbundle using the given script, or your own.
-4. Playtest your map.
-5. Repeat from step 2 as needed
+4. Playtest your map. (Go back to step 2 if needed)
 6. Copy your assetbundles into `Thunderstore/CustomMaps` (subfolders allowed)
 7. Upload to thunderstore :)   (Your zip must have `CustomMaps` at the root level.)
 
-## Unity
-
 ### Setup
 
-STRAFTAT (or at least this kit) was made in [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2). The kit may possibly work in other versions, but I haven't tested anything.
+> [!WARNING]
+> The kit comes with .dll in `Assets/Plugins`. You might already have some of these installed as packages, causing Unity to freak out about the duplicates. Remove the duplicates to resolve build errors.
 
-If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`, set your BepInEx plugin folder and folder structure for your assetbundles in there. Build bundles with the `Assets/Build Asset Bundles` menu in the top menu bar. As long as bundles are within `CustomMaps`, folder structure doesn't matter.
+1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.)
 
-You may have some build errors to begin with, because the kit includes DLL dependencies for all in game components/stubs, where those DLLs include some Unity packages you may already have installed. Read the error messages to remove duplicates and resolve the build errors.
+2. (If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`) Set your BepInEx plugin folder and folder structure for your assetbundles in the bundle build script. As long as the bundles end up inside `CustomMaps`, folder structure doesn't matter. Bundles are built using `Assets/Build Asset Bundles` in the top menu bar.
 
-### General
+3. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the .unity file. Your map bundle can be named whatever, and can hold multiple scenes. The version of your map is determined by the manifest.json in your Thunderstore upload.
 
-When testing changes to your map, you don't have to restart your game unless you change the name of the scene or name/path of the bundle.
+4. For materials and thumbnails to work, you must export some assetbundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game their in game equivalents. For custom shaders, see the wiki.
 
-The name of your .unity file determines the name of your map in game. Your map bundle can be named whatever, and can hold multiple scenes. The version of your map is determined by the manifest.json of your Thunderstore upload.
+5. When testing changes to your map, you don't have to restart your game, unless you change the name of the scene or name/path of the bundle. Just exit and re-enter exploration mode.
 
-For materials and thumbnails to work, you must have a bundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap their shaders for in game ones. For custom shaders, see the wiki.
+**Note**
 
-All users with CLR have the `shared` bundle, for vanilla assets like item/player spawners, etc. If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki` on Discord through DM or [the modding channel of the STRAFTAT server](https://discord.com/channels/1124764095623741473/1364522283485626368). You can also contact me for custom map behavior or weapons :)
-
-### Extra Notes
-
-The TextMeshPro package is required to use the parkour prefabs in `shared`.
+All users with CLR have the `shared` bundle, which will contain vanilla assets like item/player spawners, ladders, materials, etc. This system means map makers don't have to rip assets themselves and export assets individually (which saves on map size). If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki`. You can also contact me for custom weapons or map behavior :)
 
 ---
 
-[Technical details can be found at the wiki.](https://github.com/Kokiix/CustomMapKit/wiki/Technical-Details)
+[Find more information in the wiki.](https://github.com/Kokiix/CustomMapKit/wiki)
