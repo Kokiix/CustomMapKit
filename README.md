@@ -1,7 +1,7 @@
 # Custom Map Kit
 
 > [!CAUTION]
-> This project is functional, but under development. Making a map will likely requiring contacting @zkoki on Discord (through DM or [STRAFTAT server modding channel](https://discord.gg/xjx7PNq5)) for features or help.
+> This project is functional, but under development. At the moment, making a map will likely requiring contacting `@zkoki` on Discord (through DM or [STRAFTAT server modding channel](https://discord.gg/xjx7PNq5)) for features or help.
 
 > [!NOTE]
 > Your maps will need [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) to work!
