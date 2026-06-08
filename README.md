@@ -29,7 +29,9 @@
 
 4. For materials and thumbnails to work, you must export some assetbundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game their in game equivalents. For custom shaders, see the wiki.
 
-5. When testing changes to your map, you don't have to restart your game, unless you change the name of the scene or name/path of the bundle. Just exit and re-enter exploration mode.
+5. Set the name of your new map, change the weapon in the spawner, and export. Install [Custom Levels Reborn (CLR)](https://github.com/Kokiix/custom_levels_reborn) if needed.
+
+6. Run the game! You should see your new map with the custom name and different spawner item. When testing changes to your map, you don't have to restart your game, unless you change the name of the scene or name/path of the bundle. Just exit and re-enter exploration mode.
 
 **Note**
 
