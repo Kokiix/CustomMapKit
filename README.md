@@ -25,7 +25,7 @@
 
 2. (If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`) Set your BepInEx plugin folder and folder structure for your assetbundles in the bundle build script. As long as the bundles end up inside `CustomMaps`, folder structure doesn't matter. Bundles are built using `Assets/Build Asset Bundles` in the top menu bar.
 
-3. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the .unity file. Your map bundle can be named whatever, and can hold multiple scenes. The version of your map is determined by the manifest.json in your Thunderstore upload.
+3. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the `.unity` file. Your map bundle can be named whatever, and can hold multiple scenes. The version of your map is determined by the `manifest.json` in your Thunderstore upload.
 
 4. For materials and thumbnails to work, you must export some assetbundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game their in game equivalents. For custom shaders, see the wiki.
 
