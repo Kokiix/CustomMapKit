@@ -35,7 +35,9 @@
 
 **Note**
 
-All users with CLR have the `shared` bundle, which will contain vanilla assets like item/player spawners, ladders, materials, etc. This system means map makers don't have to rip assets themselves and export assets individually (which saves on map size). If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki`. You can also contact me for custom weapons or map behavior :)
+All users with CLR have the `clr_shared` bundle, which will contain vanilla assets like item/player spawners, ladders, materials, etc. This system means map makers don't have to rip assets themselves and export assets individually (which saves on map size). If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki`. You can also contact me for custom weapons or map behavior :)
+
+Large(ish) files for the shared bundle can be found here: [Google Drive Link](https://drive.google.com/drive/folders/1jtC7cRzBCGVyK0x6aaHw7uumLnIWoA8o?usp=sharing)
 
 ---
 
