@@ -17,7 +17,7 @@ public static class BundleBuilder
     private static readonly string pluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
 
     // Update whenever you make new bundles
-    private static readonly List<string> bundlesToIgnore = new() { "shared" };
+    private static readonly List<string> bundlesToIgnore = new() { "clr_shared" };
     private static readonly Dictionary<string, string> bundleToOutputDir = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
         // These output dirs are appended to your plugin directory set above
