@@ -1,1 +1,6 @@
-Thunderstore/*.meta
+ThunderstoreTemplate/*.meta
+
+LICENSE.meta
+README.md.meta
+ThunderstoreTemplate.meta
+UnityTemplate.meta
