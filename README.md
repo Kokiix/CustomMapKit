@@ -7,21 +7,12 @@
 > Your maps will need [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) to work!
 > Your bundles will automatically be loaded by CLR. Don't create a bundle loader plugin unless you know what you're doing.
 
-## General Process
-
-1. Put the contents of `Unity` into your unity project. 
-2. Work on your map.
-3. Build the assetbundle using the given script, or your own.
-4. Playtest your map. (Go back to step 2 if needed)
-6. Copy your assetbundles into `Thunderstore/CustomMaps` (subfolders allowed)
-7. Upload to thunderstore :)   (Your zip must have `CustomMaps` at the root level.)
-
 ### Setup
 
 > [!WARNING]
 > The kit comes with .dll in `Assets/Plugins`. You might already have some of these installed as packages, causing Unity to freak out about the duplicates. Remove the duplicates to resolve build errors.
 
-1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.), then move the contents of the `Unity` folder in the kit into the Unity project.
+1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.), then move the contents of the `UnityTemplate` folder in the kit into the Unity project.
 
 2. (If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`) Set your BepInEx plugin folder and folder structure for your assetbundles in the bundle build script. As long as the bundles end up inside `CustomMaps`, folder structure doesn't matter. Bundles are built using `Assets/Build Asset Bundles` in the top menu bar.
 
