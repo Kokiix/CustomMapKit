@@ -12,7 +12,7 @@
 > [!WARNING]
 > The kit comes with .dll in `Assets/Plugins`. You might already have some of these installed as packages, causing Unity to freak out about the duplicates. Remove the duplicates to resolve build errors.
 
-1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.), then move the contents of the `UnityTemplate` folder in the kit into the Unity project.
+1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.), then move the contents of the `UnityTemplate` folder into a new or existing Unity project.
 
 2. (If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`) Set your BepInEx plugin folder and folder structure for your assetbundles in the bundle build script. As long as the bundles end up inside `CustomMaps`, folder structure doesn't matter. Bundles are built using `Assets/Build Asset Bundles` in the top menu bar.
 
