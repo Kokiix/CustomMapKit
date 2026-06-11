@@ -21,7 +21,7 @@
 > [!WARNING]
 > The kit comes with .dll in `Assets/Plugins`. You might already have some of these installed as packages, causing Unity to freak out about the duplicates. Remove the duplicates to resolve build errors.
 
-1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.)
+1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.), then move the contents of the `Unity` folder in the kit into the Unity project.
 
 2. (If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`) Set your BepInEx plugin folder and folder structure for your assetbundles in the bundle build script. As long as the bundles end up inside `CustomMaps`, folder structure doesn't matter. Bundles are built using `Assets/Build Asset Bundles` in the top menu bar.
 
@@ -35,7 +35,7 @@
 
 **Note**
 
-All users with CLR have the `shared` bundle, which will contain vanilla assets like item/player spawners, ladders, materials, etc. This system means map makers don't have to rip assets themselves and export assets individually (which saves on map size). If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki`. You can also contact me for custom weapons or map behavior :)
+All users with CLR have the `clr_shared` bundle, which will contain vanilla assets like item/player spawners, ladders, materials, etc. This system means map makers don't have to rip assets themselves and export assets individually (which saves on map size). If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki`. You can also contact me for custom weapons or map behavior :)
 
 Large(ish) files for the shared bundle can be found here: [Google Drive Link](https://drive.google.com/drive/folders/1jtC7cRzBCGVyK0x6aaHw7uumLnIWoA8o?usp=sharing)
 
