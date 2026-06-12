@@ -14,15 +14,19 @@
 
 1. Install Unity (Only [Unity 2021.3.45f2](https://unity.com/releases/editor/whats-new/2021.3.45f2) has been tested to work.), then move the contents of the `UnityTemplate` folder into a new or existing Unity project.
 
-2. (If you're using the bundle exporter that comes with the kit in `Assets/Editor/BundleBuild.cs`) Set your BepInEx plugin folder and folder structure for your assetbundles in the bundle build script. As long as the bundles end up inside `CustomMaps`, folder structure doesn't matter. Bundles are built using `Assets/Build Asset Bundles` in the top menu bar.
+2. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the `.unity` file.
 
-3. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the `.unity` file. Your map bundle can be named whatever, and can hold multiple scenes. The version of your map is determined by the `manifest.json` in your Thunderstore upload.
+3. Set the name of your new map and change the weapon in the spawner to verify basic functionality.
 
-4. For materials and thumbnails to work, you must export some assetbundle that ends in `_resources`. Any texture with the same name as your scene file will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game their in game equivalents. For custom shaders, see the wiki.
+4. The minimum export setup for a mod is a single *uniquely named* assetbundle with just the `.unity file` inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
 
-5. Set the name of your new map, change the weapon in the spawner, and export. Install [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) if needed.
+5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. The bundle must be somewhere inside a `CustomMaps` folder for CLR to load it.
 
-6. Run the game! You should see your new map with the custom name and different spawner item. When testing changes to your map, you don't have to restart your game, unless you change the name of the scene or name/path of the bundle. Just exit and re-enter exploration mode.
+6. For thumbnails and vanilla shaders to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game equivalents. For custom shaders, see the wiki.
+
+7. Install [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) if needed.
+
+8. Run the game! You should see your new map with the custom name and different spawner item. When testing changes to your map, you don't have to restart your game, unless you change the name of the scene or name/path of the bundle. Just exit and re-enter exploration mode.
 
 **Note**
 
