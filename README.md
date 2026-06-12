@@ -18,7 +18,7 @@
 
 3. Set the name of your new map and change the weapon in the spawner to verify basic functionality.
 
-4. The minimum export setup for a mod is a single *uniquely named* assetbundle with just the `.unity` file inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
+4. The minimum export setup for a mod is a single *uniquely named* (`{USERNAME}-{MAP}` format would be smart) assetbundle with just the `.unity` file inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
 
 5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. CLR strictly requires this format: `BepInEx/plugins/{your_mod_name}/CustomMaps/{ folders, bundles, anything }`.
 
@@ -34,6 +34,15 @@ All users with CLR have the `clr_shared` bundle, which will contain vanilla asse
 
 The kit on Github comes with only **part of the full shared bundle**. Large files, like textures, can be found here: [Google Drive Link](https://drive.google.com/drive/folders/1jtC7cRzBCGVyK0x6aaHw7uumLnIWoA8o?usp=sharing)
 
+### Exporting to Thunderstore
+
+1. Copy your `CustomMaps` folder into `ThunderstoreTemplate` and fill out the manifest.json, README, n thumbnail.
+
+The version you set in the manifest.json will be used internally in CLR. Users with different versions will be considered to have different maps.
+
+2. Zip the folder so that `CustomMaps` is in the root of the zip.
+
+3. Upload at https://thunderstore.io/package/create/   :)
 ---
 
 [Find more information in the wiki.](https://github.com/Kokiix/CustomMapKit/wiki)
