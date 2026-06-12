@@ -18,9 +18,9 @@
 
 3. Set the name of your new map and change the weapon in the spawner to verify basic functionality.
 
-4. The minimum export setup for a mod is a single *uniquely named* assetbundle with just the `.unity file` inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
+4. The minimum export setup for a mod is a single *uniquely named* assetbundle with just the `.unity` file inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
 
-5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. The bundle must be somewhere inside a `CustomMaps` folder for CLR to load it.
+5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. CLR strictly requires this format: `BepInEx/plugins/{your_mod_name}/CustomMaps/{ folders, bundles, anything }`.
 
 6. For thumbnails and vanilla shaders to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game equivalents. For custom shaders, see the wiki.
 
