@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8596807523937237486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.315, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +44,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.82393783, g: 1, b: 0.7607843, a: 1}
-  m_Intensity: 1.89
+  m_Intensity: 10
   m_Range: 2.5
   m_SpotAngle: 83.1
   m_InnerSpotAngle: 1
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb6ddba0d5a62842b15f001281e25bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: 0
+  _weapon: 31
   _weaponRespawnTimeInSeconds: 3
 --- !u!114 &8656549424970502663
 MonoBehaviour:
@@ -176,8 +176,8 @@ MonoBehaviour:
   <PrefabId>k__BackingField: 6
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 1687252477
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 5607625337668269451
+  <SceneId>k__BackingField: 653097783159851153
+  <AssetPathHash>k__BackingField: 0
 --- !u!114 &8596807524200925955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +211,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &8596807524341397530
 Transform:
