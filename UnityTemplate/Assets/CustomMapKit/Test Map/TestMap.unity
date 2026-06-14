@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: eaa6cf2e5b7952a47b93822db9a4ce3d, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 3b3ca2a9a297e6e40a0de467231f7b3a, type: 2}
 --- !u!196 &970
 NavMeshSettings:
@@ -575,7 +575,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
