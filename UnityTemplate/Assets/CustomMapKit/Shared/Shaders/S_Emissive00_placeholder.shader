@@ -39,7 +39,7 @@ Shader "S_Emissive00" {
 
 			float4 frag(Vertex_Stage_Output input) : SV_TARGET
 			{
-				return float4(1.0, 1.0, 1.0, 1.0); // RGBA
+				return float4(1, 1, 1, 1.0); // RGBA
 			}
 
 			ENDHLSL
