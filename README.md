@@ -20,7 +20,7 @@
 
 4. The minimum export setup for a mod is a single *uniquely named* (`{USERNAME}-{MAP}` format would be smart) assetbundle with just the `.unity` file inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
 
-5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. CLR strictly requires this format: `BepInEx/plugins/{your_mod_name}/CustomMaps/{ folders, bundles, anything }`.
+5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. Your mod must contain a folder named `CustomMaps`, and that folder must hold only assetbundles, in order for those bundles to be loaded.
 
 6. For thumbnails and vanilla shaders to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game equivalents. For custom shaders, see the wiki.
 
@@ -33,16 +33,6 @@
 All users with CLR have the `clr_shared` bundle, which will contain vanilla assets like gameobjects, meshes, and textures. This system means map makers don't have to rip export assets themselves, saving on time and map filesize. If you would like a vanilla asset (that would likely be re-used) to be added to the bundle , contact `@zkoki`. You can also contact me for custom weapons or map behavior :)
 
 The kit on Github comes with only **part of the full shared bundle**. Large files, like textures, can be found here: [Google Drive Link](https://drive.google.com/drive/folders/1jtC7cRzBCGVyK0x6aaHw7uumLnIWoA8o?usp=sharing)
-
-### Exporting to Thunderstore
-
-1. Copy your `CustomMaps` folder into `ThunderstoreTemplate` and fill out the manifest.json, README, n thumbnail.
-
-The version you set in the manifest.json will be used internally in CLR. Users with different versions will be considered to have different maps.
-
-2. Zip the folder so that `CustomMaps` is in the root of the zip.
-
-3. Upload at https://thunderstore.io/package/create/   :)
 
 ---
 
