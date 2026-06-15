@@ -22,7 +22,7 @@
 
 5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. Your mod must contain a folder named `CustomMaps`, and that folder must hold only assetbundles, in order for those bundles to be loaded.
 
-6. For thumbnails and vanilla shaders to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail. All materials you use (except those from the shared bundle) must go in here, so that the map loader can swap the bundled shaders for in game equivalents. For custom shaders, see the wiki.
+6. For thumbnails to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail.
 
 7. Install [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) if needed.
 
