@@ -13,17 +13,25 @@ public static class BundleBuilder
 
     // CHANGE THIS STUFF ---------------------------------------------------------------------------------------------------------------------------
 
-    // Set once
+    // Set once -----------------------------------------------------------------------
     private const string pluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
-    private const BuildTarget osTarget = BuildTarget.StandaloneWindows64;
-    // private const BuildTarget osTarget = BuildTarget.StandaloneLinux64
 
-    // Update whenever you make new bundles
+    private const BuildTarget osTarget = BuildTarget.StandaloneWindows64; // Windows
+    // private const BuildTarget osTarget = BuildTarget.StandaloneLinux64 // Linux
+    // ---------------------------------------------------------------------------------
+
+
+    // Update the below whenever you make new bundles
     private static readonly List<string> bundlesToIgnore = new() { "clr_shared" };
     private static readonly Dictionary<string, string> bundleToOutputDir = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        // These output dirs are appended to your plugin directory set above
-        { "testmap", @"DEVELOPMENT-BUILD-testmap\CustomMaps" }
+        // These output dirs are appended to your plugin directory set above.
+
+        { "testmap", @"DEVELOPMENT-BUILD-testmap\CustomMaps" },
+
+        // Duplicate and uncomment the line below, then fill in the all caps words, for each of your bundles.
+        // Underneath CustomMaps you can have whatever folder structure you want, like CustomMaps\map_01, CustomMaps\map_02, etc
+        // { "BUNDLE_NAME", @"YOUR_MOD_NAME\CustomMaps" },
     };
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
