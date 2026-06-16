@@ -5,12 +5,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-// Caution: mostly vibe coded
-
 public static class BundleBuilder
 {
-    private static readonly string localDir = "AssetBundles";
-
     // CHANGE THIS STUFF ---------------------------------------------------------------------------------------------------------------------------
 
     // Set once -----------------------------------------------------------------------
@@ -21,11 +17,11 @@ public static class BundleBuilder
     // ---------------------------------------------------------------------------------
 
 
-    // Update the below whenever you make new bundles
-    private static readonly List<string> bundlesToIgnore = new() { "clr_shared" };
-    private static readonly Dictionary<string, string> bundleToOutputDir = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    // Set this every time you make a new bundle
+    private static readonly Dictionary<string, string> bundleDestinations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        // These output dirs are appended to your plugin directory set above.
+        // These dirs are appended to your pluginDir set above.
+        // _resources bundles with the same name as your main bundle will automatically be exported to the same dir (ex. testmap_resources)
 
         { "testmap", @"DEVELOPMENT-BUILD-testmap\CustomMaps" },
 
@@ -35,78 +31,31 @@ public static class BundleBuilder
     };
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
+
+    private const string localBuildDir = "AssetBundles";
+
     [MenuItem("Assets/Build AssetBundles")]
     public static void PerformBuild()
     {
         FishNetMetadataSetup.SetupAllNetworkObjectsInProject();
-        if (!Directory.Exists(localDir)) Directory.CreateDirectory(localDir);
 
-        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(localDir, BuildAssetBundleOptions.None, osTarget);
-        if (manifest != null)
+        foreach (var entry in bundleDestinations.ToList())
         {
-            CopyChangedBundles(manifest);
+            bundleDestinations.Add(entry.Key + "_resources", entry.Value);
         }
-    }
 
-    static void CopyChangedBundles(AssetBundleManifest manifest)
-    {
-        var bundles = manifest.GetAllAssetBundles().Where(b => !bundlesToIgnore.Contains(b));
-        int copiedCount = 0;
-
+        if (!Directory.Exists(localBuildDir)) Directory.CreateDirectory(localBuildDir);
+        var manifest = BuildPipeline.BuildAssetBundles(localBuildDir, BuildAssetBundleOptions.None, osTarget);
+        var bundles = manifest.GetAllAssetBundles().Where(bundleDestinations.ContainsKey);
         foreach (string bundleName in bundles)
         {
-            string currentTargetDir = GetTargetDirectory(bundleName);
-            if (currentTargetDir == "") continue;
-
-            string mainSource = Path.Combine(localDir, bundleName);
-            string mainDest = Path.Combine(currentTargetDir, bundleName);
-            if (CopyFileIfNewer(mainSource, mainDest))
-            {
-                copiedCount++;
-            }
+            var srcFile = Path.Combine(localBuildDir, bundleName);
+            var exportDir = Path.Combine(pluginDir, bundleDestinations[bundleName]);
+            if (!Directory.Exists(exportDir))
+                Directory.CreateDirectory(exportDir);
+            File.Copy(srcFile, Path.Combine(exportDir, bundleName), overwrite: true);
         }
 
-        Debug.Log($"Build Complete. {copiedCount} bundles exported to Plugins.");
-    }
-
-    static string GetTargetDirectory(string bundleName)
-    {
-        if (bundleName.EndsWith("_resources"))
-        {
-            bundleName = bundleName[..^10];
-            if (bundlesToIgnore.Contains(bundleName)) return "";
-        }
-        if (!bundleToOutputDir.TryGetValue(bundleName, out string projectDir))
-        {
-            throw new Exception($"No output dir has been set for bundle {bundleName}!");
-        }
-        else if (!projectDir.Contains("CustomMaps") && bundleName != "shared")
-        {
-            throw new Exception("Your mod folder must have a folder named 'CustomMaps' to be seen by Custom Levels Reborn!");
-        }
-
-        return Path.Combine(pluginDir, projectDir);
-    }
-
-    static bool CopyFileIfNewer(string sourceFile, string destFile)
-    {
-        if (!File.Exists(sourceFile)) return false;
-
-        // Ensure the target folder exists dynamically before writing files
-        string destDir = Path.GetDirectoryName(destFile);
-        if (!string.IsNullOrEmpty(destDir) && !Directory.Exists(destDir))
-        {
-            Directory.CreateDirectory(destDir);
-        }
-
-        // Only copy if the destination doesn't exist, or the source file is newer than the destination
-        if (!File.Exists(destFile) || File.GetLastWriteTimeUtc(sourceFile) > File.GetLastWriteTimeUtc(destFile))
-        {
-            File.Copy(sourceFile, destFile, true);
-            Debug.Log($"<color=cyan>Exported:</color> {Path.GetFileName(sourceFile)} to {destDir}");
-            return true;
-        }
-
-        return false;
+        Debug.Log($"Bundle Build Complete.");
     }
 }
