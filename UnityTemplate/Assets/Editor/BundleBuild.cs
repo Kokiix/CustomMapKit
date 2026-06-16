@@ -14,7 +14,9 @@ public static class BundleBuilder
     // CHANGE THIS STUFF ---------------------------------------------------------------------------------------------------------------------------
 
     // Set once
-    private static readonly string pluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
+    private const string pluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
+    private const BuildTarget osTarget = BuildTarget.StandaloneWindows64;
+    // private const BuildTarget osTarget = BuildTarget.StandaloneLinux64
 
     // Update whenever you make new bundles
     private static readonly List<string> bundlesToIgnore = new() { "clr_shared" };
@@ -31,7 +33,7 @@ public static class BundleBuilder
         FishNetMetadataSetup.SetupAllNetworkObjectsInProject();
         if (!Directory.Exists(localDir)) Directory.CreateDirectory(localDir);
 
-        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(localDir, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(localDir, BuildAssetBundleOptions.None, osTarget);
         if (manifest != null)
         {
             CopyChangedBundles(manifest);
