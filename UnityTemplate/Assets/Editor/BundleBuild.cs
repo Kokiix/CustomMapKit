@@ -10,24 +10,59 @@ public static class BundleBuilder
     // CHANGE THIS STUFF ---------------------------------------------------------------------------------------------------------------------------
 
     // Set once -----------------------------------------------------------------------
-    private const string pluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
+    private const string BepInExPluginDir = @"C:\Users\koki\AppData\Roaming\com.kesomannen.gale\straftat\profiles\Default\BepInEx\plugins";
 
-    private const BuildTarget osTarget = BuildTarget.StandaloneWindows64; // Windows
-    // private const BuildTarget osTarget = BuildTarget.StandaloneLinux64 // Linux
+    private const BuildTarget OSTarget = BuildTarget.StandaloneWindows64; // Windows
+    // private const BuildTarget OSTarget = BuildTarget.StandaloneLinux64 // Linux
     // ---------------------------------------------------------------------------------
 
 
-    // Set this every time you make a new bundle
+    // Set this for every new bundle
     private static readonly Dictionary<string, string> bundleDestinations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        // These dirs are appended to your pluginDir set above.
-        // _resources bundles with the same name as your main bundle will automatically be exported to the same dir (ex. testmap_resources)
-
         { "testmap", @"DEVELOPMENT-BUILD-testmap\CustomMaps" },
+        // { "BUNDLE_NAME", @"MOD_FOLDER_NAME\CustomMaps" },
 
-        // Duplicate and uncomment the line below, then fill in the all caps words, for each of your bundles.
-        // Underneath CustomMaps you can have whatever folder structure you want, like CustomMaps\map_01, CustomMaps\map_02, etc
-        // { "BUNDLE_NAME", @"YOUR_MOD_NAME\CustomMaps" },
+        /* 
+        The directories above will be created under the BepInEx pluginDir. Your mod folder must have a folder named "CustomMaps" that only holds assetbundles.
+        
+        "_resources" bundles that match the name of a scene bundle (ex. "testmap_resources" matches "testmap") will be automatically built without needing an entry above.
+
+        Below are 2 example map structures.
+
+        Example A:
+
+                MOD_FOLDER_NAME/
+                ├── CustomMaps/
+                │   ├── map_name_resources
+                │   ├── map_name
+
+                { "map_name", @"MOD_FOLDER_NAME\CustomMaps\" },
+
+        Example B:
+
+                MOD_FOLDER_NAME/
+                ├── CustomMaps/
+                │   ├── mymap_resources
+                │   ├── map-series-a/
+                │   │   ├── map_a_00
+                │   │   └── map_a_01
+                │   ├── map-series-b/
+                │   │   ├── map_b_00
+                │   │   └── map_b_01
+                ├── manifest.json
+                ├── README.md
+                └── thumbnail.png
+
+                { "mymap_resources", @"MOD_FOLDER_NAME\CustomMaps\" },
+                { "map_a_00", @"MOD_FOLDER_NAME\CustomMaps\map-series-a" },
+                { "map_a_01", @"MOD_FOLDER_NAME\CustomMaps\map-series-a" },
+                { "map_b_00", @"MOD_FOLDER_NAME\CustomMaps\map-series-b" },
+                { "map_b_01", @"MOD_FOLDER_NAME\CustomMaps\map-series-b" },
+
+                (manifest, README, etc, will be present in final mod but aren't needed for testing)
+        
+        */
     };
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -45,12 +80,12 @@ public static class BundleBuilder
         }
 
         if (!Directory.Exists(localBuildDir)) Directory.CreateDirectory(localBuildDir);
-        var manifest = BuildPipeline.BuildAssetBundles(localBuildDir, BuildAssetBundleOptions.None, osTarget);
+        var manifest = BuildPipeline.BuildAssetBundles(localBuildDir, BuildAssetBundleOptions.None, OSTarget);
         var bundles = manifest.GetAllAssetBundles().Where(bundleDestinations.ContainsKey);
         foreach (string bundleName in bundles)
         {
             var srcFile = Path.Combine(localBuildDir, bundleName);
-            var exportDir = Path.Combine(pluginDir, bundleDestinations[bundleName]);
+            var exportDir = Path.Combine(BepInExPluginDir, bundleDestinations[bundleName]);
             if (!Directory.Exists(exportDir))
                 Directory.CreateDirectory(exportDir);
             File.Copy(srcFile, Path.Combine(exportDir, bundleName), overwrite: true);
