@@ -16,17 +16,19 @@
 
 2. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the `.unity` file.
 
-3. Set the name of your new map and change the weapon in the spawner to verify basic functionality.
+3. Change the name of your new map and the spawner weapons to verify basic functionality.
 
-4. The minimum export setup for a mod is a single *uniquely named* (`{USERNAME}-{MAP}` format would be smart) assetbundle with just the `.unity` file inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
+4. The minimum bundle setup for a mod is a single *uniquely named* (`{USERNAME}-{MAP}` format would be smart) assetbundle with just the `.unity` file inside. You can have multiple `.unity` files in a bundle and multiple bundles exported.
 
-5. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. Your mod must contain a folder named `CustomMaps`, and that folder must hold only assetbundles, in order for those bundles to be loaded.
+5. For thumbnails to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail.
 
-6. For thumbnails to work, you must **also** export an assetbundle with some name that ends in `_resources`. Any texture inside that matches the name of your map will be assigned as the thumbnail.
+6. Set the build location for your bundle in the `Assets/Editor/BundleBuild.cs` file. Your mod must contain a folder named `CustomMaps`, and that folder must hold only assetbundles, in order for those bundles to be loaded.
 
-7. Install [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) if needed.
+7. Build bundles using the top menu bar (`Assets/Build Asset Bundles`).
 
-8. Run the game! You should see your new map with the custom name and different spawner item. When testing changes to your map, you don't have to restart your game, unless you change path of the bundle or `.unity` file. Just exit and re-enter exploration mode.
+8. Install [Custom Levels Reborn (CLR)](https://thunderstore.io/c/straftat/p/koki/Custom_Levels_Reborn/) if needed.
+
+9. Run the game! You should see your new map with the custom name and different spawner item. When testing changes to your map, you don't have to restart your game, unless you change path of the bundle or `.unity` file. Just exit and re-enter exploration mode.
 
 **Note**
 
