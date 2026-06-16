@@ -21,22 +21,22 @@ public static class BundleBuilder
     private static readonly Dictionary<string, string> bundleDestinations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
         { "testmap", @"DEVELOPMENT-BUILD-testmap\CustomMaps" },
+        { "testmap_resources", @"DEVELOPMENT-BUILD-testmap\CustomMaps" },
         // { "BUNDLE_NAME", @"MOD_FOLDER_NAME\CustomMaps" },
 
         /* 
         The directories above will be created under the BepInEx pluginDir. Your mod folder must have a folder named "CustomMaps" that only holds assetbundles.
-        
-        "_resources" bundles that match the name of a scene bundle (ex. "testmap_resources" matches "testmap") will be automatically built without needing an entry above.
 
         Below are 2 example map structures.
 
         Example A:
 
                 MOD_FOLDER_NAME/
-                ├── CustomMaps/
-                │   ├── map_name_resources
-                │   ├── map_name
+                └── CustomMaps/
+                   ├── map_name_resources
+                   └── map_name
 
+                { "map_name_resources", @"MOD_FOLDER_NAME\CustomMaps\" },
                 { "map_name", @"MOD_FOLDER_NAME\CustomMaps\" },
 
         Example B:
@@ -73,11 +73,6 @@ public static class BundleBuilder
     public static void PerformBuild()
     {
         FishNetMetadataSetup.SetupAllNetworkObjectsInProject();
-
-        foreach (var entry in bundleDestinations.ToList())
-        {
-            bundleDestinations.Add(entry.Key + "_resources", entry.Value);
-        }
 
         if (!Directory.Exists(localBuildDir)) Directory.CreateDirectory(localBuildDir);
         var manifest = BuildPipeline.BuildAssetBundles(localBuildDir, BuildAssetBundleOptions.None, OSTarget);
