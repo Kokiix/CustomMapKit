@@ -16,7 +16,7 @@
 
 2. Make a copy of the test map to begin your project. The name of your new map is determined by the name of the `.unity` file. Change the name of your new map and the spawner weapons to verify basic functionality.
 
-3. Maps are exported through AssetBundles ([Unity Manual Link](https://docs.unity3d.com/6000.0/Documentation/Manual/assetbundles-section.html)). At the minimum, have 1 bundle for all your `.unity` files and 1 for your thumbnail textures (thumbnails are linked to maps by matching filename). The thumbnail bundle should end with `_resources` and ideally match the name of a scene bundle.
+3. Maps are exported through AssetBundles ([Unity Manual Link](https://docs.unity3d.com/6000.0/Documentation/Manual/assetbundles-section.html)). At the minimum, have 1 bundle for all your `.unity` files and 1 for your thumbnail textures (thumbnails are linked to maps by matching filename). The thumbnail bundle should end with `_resources`.
 
       For this tutorial, change the bundle of your copied `TestMap.unity` from `testmap`, and the bundle of `TestMap.png` from `testmap_resources`.
 
