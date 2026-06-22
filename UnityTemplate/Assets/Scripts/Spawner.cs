@@ -2,50 +2,50 @@ using FishNet.Object;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public abstract class Spawner : NetworkBehaviour
-{
+/// <summary>
+/// The base class for all things spawner related.
+/// </summary>
+public abstract class Spawner : NetworkBehaviour {
 	[FormerlySerializedAs("countdown")]
-	[Range(0f, 60f)]
-	[SerializeField]
-	protected float weaponRespawnTimeInSeconds;
+	[Range(0, 60), SerializeField] protected float weaponRespawnTimeInSeconds = 3f;
 
-	protected float CountdownTimer;
-
-	protected bool WaitTillTaken;
-
+	protected float CountdownTimer = 0;
+	protected bool WaitTillTaken = true;
 	protected ItemBehaviour ItemBehaviour;
 
-	private bool NetworkInitializeEarly_Spawner_Assembly_002DCSharp_002Edll;
+	protected virtual void Start() { CountdownTimer = weaponRespawnTimeInSeconds; }
 
-	private bool NetworkInitializeLate_Spawner_Assembly_002DCSharp_002Edll;
+	protected virtual void Update() {
+		if (!IsServer) { return; }
 
-	protected virtual void Start()
-	{
-	}
+		// if waiting till the gun is taken do nothing untill it is
+		if (WaitTillTaken && ItemBehaviour && !ItemBehaviour.isTaken) {
+			CountdownTimer = weaponRespawnTimeInSeconds;
+			return;
+		}
 
-	protected virtual void Update()
-	{
+		if (CountdownTimer > 0f) {
+			CountdownTimer -= Time.deltaTime;
+			return;
+		}
+		Spawn();
+		CountdownTimer = weaponRespawnTimeInSeconds;
 	}
 
 	public abstract void Spawn();
+}
 
-	public virtual void NetworkInitialize___Early()
-	{
-	}
+[System.Serializable]
+public struct WeaponData
+{
+	public string WeaponName;
+	public uint SpawnChance;
+	public bool IsSpawnable;
 
-	public virtual void NetworkInitialize__Late()
+	public WeaponData(string weaponName, uint spawnChance, bool isSpawnable)
 	{
-	}
-
-	public override void NetworkInitializeIfDisabled()
-	{
-	}
-
-	public virtual void Awake()
-	{
-	}
-
-	public virtual void Awake___UserLogic()
-	{
+		this.WeaponName = weaponName;
+		this.SpawnChance = spawnChance;
+		this.IsSpawnable = isSpawnable;
 	}
 }

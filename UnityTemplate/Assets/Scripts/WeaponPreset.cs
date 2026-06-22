@@ -1,8 +1,9 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class WeaponPreset
 {
-	public List<WeaponData> weapons;
+	public List<WeaponData> weapons = new();
 }
