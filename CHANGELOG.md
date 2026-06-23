@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/Kokiix/CustomMapKit/compare/v0.5.0...v0.5.1) (2026-06-23)
+
+
+### Bug Fixes
+
+* add back dlls and scripts that went missing in v0.5.0 ([fce240c](https://github.com/Kokiix/CustomMapKit/commit/fce240cb6b8cb8928d9e88482ffe6e3361e2fd69))
+
 ## [0.5.0](https://github.com/Kokiix/CustomMapKit/compare/v0.4.0...v0.5.0) (2026-06-23)
 
 
