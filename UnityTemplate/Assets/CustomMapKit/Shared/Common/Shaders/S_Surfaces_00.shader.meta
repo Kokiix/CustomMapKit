@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1cb756d626c435f4a881f183c9e56b2f
+guid: 63dc0b077e5f0b5409ef5e4075ae5abb
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
@@ -7,5 +7,5 @@ ShaderImporter:
   nonModifiableTextures: []
   preprocessorOverride: 0
   userData: 
-  assetBundleName: clr_shared
+  assetBundleName: 
   assetBundleVariant: 
