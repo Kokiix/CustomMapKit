@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/Kokiix/CustomMapKit/compare/v0.5.2...v0.5.3) (2026-06-23)
+
+
+### Bug Fixes
+
+* materials were pointing to duplicate shader files outside of kit ([586813b](https://github.com/Kokiix/CustomMapKit/commit/586813b316d9db6694700ebbb56ab7fab478f791))
+
 ## [0.5.2](https://github.com/Kokiix/CustomMapKit/compare/v0.5.1...v0.5.2) (2026-06-23)
 
 
