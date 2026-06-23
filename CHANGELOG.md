@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/Kokiix/CustomMapKit/compare/v0.5.1...v0.5.2) (2026-06-23)
+
+
+### Bug Fixes
+
+* add missing scripts frfr this time ([8ffc1db](https://github.com/Kokiix/CustomMapKit/commit/8ffc1dbf8a00e48d414f54e2c0458456e67e83ac))
+
 ## [0.5.1](https://github.com/Kokiix/CustomMapKit/compare/v0.5.0...v0.5.1) (2026-06-23)
 
 
