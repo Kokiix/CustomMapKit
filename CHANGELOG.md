@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.5.0](https://github.com/Kokiix/CustomMapKit/compare/v0.4.0...v0.5.0) (2026-06-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* all scripts/plugins have been relocated and have new GUIDs.
+
+### Features
+
+* add background fog to teleporter prefab ([20752dd](https://github.com/Kokiix/CustomMapKit/commit/20752dd95a78fa1a427a4a0b74f2499a7971028d))
+* item dispenser prefab ([20752dd](https://github.com/Kokiix/CustomMapKit/commit/20752dd95a78fa1a427a4a0b74f2499a7971028d))
+* reorganize file structure of shared, mainly grouping by prefab instead of asset type ([20752dd](https://github.com/Kokiix/CustomMapKit/commit/20752dd95a78fa1a427a4a0b74f2499a7971028d))
+
+
+### Build System
+
+* migrate my (koki's) unity project from an asset rip to a mirror of the public straftat source ([a9e3f2f](https://github.com/Kokiix/CustomMapKit/commit/a9e3f2fa067d13e100c0351b0aeedacdaeec4d72))
+
 ## [0.4.0](https://github.com/Kokiix/CustomMapKit/compare/v0.3.0...v0.4.0) (2026-06-18)
 
 
