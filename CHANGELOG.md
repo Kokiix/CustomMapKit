@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/Kokiix/CustomMapKit/compare/v0.5.3...v0.5.4) (2026-06-23)
+
+
+### Bug Fixes
+
+* update project settings / tags from 0.5.0 migration ([f8a6e5b](https://github.com/Kokiix/CustomMapKit/commit/f8a6e5b7c4de9830cb1b22d2e32a27f083142098))
+
 ## [0.5.3](https://github.com/Kokiix/CustomMapKit/compare/v0.5.2...v0.5.3) (2026-06-23)
 
 
