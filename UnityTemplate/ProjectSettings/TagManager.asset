@@ -57,10 +57,6 @@ TagManager:
   - PlayerGraphics
   - Footsteps/SuperIce
   - DamageZone
-  - KillZ
-  - Footsteps/Metal
-  - Footsteps/Stone
-  - Footsteps/Concrete
   layers:
   - Default
   - TransparentFX
